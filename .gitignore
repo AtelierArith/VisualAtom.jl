@@ -1,0 +1,6 @@
+*.gif
+.DS_Store
+/Manifest.toml
+/docs/build/
+docs/build/
+docs/site/
