@@ -1,0 +1,27 @@
+version: '3'
+services:
+  julia:
+    image: visualatomjl
+    container_name: visualatomjl-julia
+    volumes:
+      - ./:/workspace/VisualAtom.jl
+    working_dir: /workspace/VisualAtom.jl
+    command: julia --project=/workspace/VisualAtom.jl
+
+  shell:
+    image: visualatomjl
+    container_name: visualatomjl-julia
+    volumes:
+      - ./:/workspace/VisualAtom.jl
+    working_dir: /workspace/VisualAtom.jl
+    command: /bin/bash
+
+  web:
+    image: visualatomjl
+    container_name: visualatomjl-packagedocs
+    volumes:
+      - ./:/workspace/VisualAtom.jl
+    working_dir: /workspace/VisualAtom.jl
+    ports:
+      - "8000:8000"
+    command: make web
