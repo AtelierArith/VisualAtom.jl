@@ -1,0 +1,39 @@
+#
+# for category_id in 0:(num_categories-1)
+#	# setup Atom
+#	for instance_id in 0:(num_instances-1)
+#		# create canvas
+#		# draw waves on canvas and save as image
+#	end
+# end
+num_categories = 1000
+num_instances = 1000
+
+# H = W = image_size
+# canvas = zeros(RGB{N08f}, H, W)
+image_size = 512
+
+# q ∼ rand(rng, vertex_num_min:vertex_num_max)
+vertex_num_min = 200
+vertex_num_max = 1000
+
+# K ∼ rand(rng, line_num_min:line_num_max)
+line_num_min = 1
+line_num_max = 200
+
+# η ∼ uniform(rng, perlin_min, perlin_min + 4)
+perlin_min = 0
+
+# n₁, n₂ = sample(rng, freq_min:freq_max, 2, replace=false)
+freq_min = 0
+freq_max = 20
+
+# oval_rate_x ∼ uniform(rng, 1, oval_rate)
+# oval_rate_y ∼ uniform(rng, 1, oval_rate)
+oval_rate = 2
+
+# radius ∼ rand(rng, radius_min:(radius_min+50))
+radius_min = 10
+
+# line_width = uniform(rng, 0.0, max_line_width)
+max_line_width = 0.1
