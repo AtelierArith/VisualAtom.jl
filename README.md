@@ -1,4 +1,6 @@
-# VisualAtom [![Build Status](https://github.com/AtelierArith/VisualAtom.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/AtelierArith/VisualAtom.jl/actions/workflows/CI.yml?query=branch%3Amain)
+# VisualAtom.jl [![Build Status](https://github.com/AtelierArith/VisualAtom.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/AtelierArith/VisualAtom.jl/actions/workflows/CI.yml?query=branch%3Amain)
+
+:warning: This implementation is unofficial.
 
 # Description
 
@@ -47,6 +49,9 @@ $ julia --project=@. --procs auto run.jl
 ```
 
 This will create `VisualAtom_dataset` and 1000 * 1000 images will be generated.
+
+<img width="860" alt="image" src="https://user-images.githubusercontent.com/16760547/235294665-b988f394-cc48-4bfe-ae7b-845af8cda9cd.png">
+
 The following screenshot was captured while running on an iMac 2019.
 
 <img src="https://user-images.githubusercontent.com/16760547/235292892-d0dcc052-d0c3-45c4-bc83-40fa708847d5.png">
