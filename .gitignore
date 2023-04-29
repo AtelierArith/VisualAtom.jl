@@ -2,7 +2,7 @@ VisualAtom_dataset
 *.png
 *.gif
 .DS_Store
-/Manifest.toml
+Manifest.toml
 /docs/build/
 docs/build/
 docs/site/
