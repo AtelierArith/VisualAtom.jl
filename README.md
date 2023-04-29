@@ -4,7 +4,7 @@
 
 # Description
 
-This repository contains [Julia](https://julialang.org/) implementation of [visual_atomic_renderer/render_VisualAtom.py](https://github.com/masora1030/CVPR2023-FDSL-on-VisualAtom/blob/47de71748abde6bd6568ee6e045ea23a047636da/visual_atomic_renderer/render_VisualAtom.py#L1-L130), originally implemented in Python. The original Python implementation can be found at https://github.com/masora1030/CVPR2023-FDSL-on-VisualAtom
+This repository contains [Julia](https://julialang.org/) implementation of [`visual_atomic_renderer/render_VisualAtom.py`](https://github.com/masora1030/CVPR2023-FDSL-on-VisualAtom/blob/47de71748abde6bd6568ee6e045ea23a047636da/visual_atomic_renderer/render_VisualAtom.py#L1-L130), originally implemented in Python. The original Python implementation can be found at [masora1030/CVPR2023-FDSL-on-VisualAtom](https://github.com/masora1030/CVPR2023-FDSL-on-VisualAtom)
 
 # Getting Started
 
