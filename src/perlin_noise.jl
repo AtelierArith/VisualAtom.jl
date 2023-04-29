@@ -1,3 +1,11 @@
+#=
+This is a Julia implementation of pnoise1, which is described
+in this repository (https://github.com/caseman/noise).
+=#
+
+"""
+https://github.com/caseman/noise/blob/bb32991ab97e90882d0e46e578060717c5b90dc5/_noise.h#L29-L61
+"""
 const PERM = @SVector UInt8[
     151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140,
     36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120,
@@ -43,6 +51,13 @@ end
 
 lerp(t, a, b) = a + t * (b - a)
 
+"""
+    pnoise1(x)
+
+Perlin noise -- pure Julia implementation.
+The results of this computation are consistent with
+the [Python package's](https://github.com/caseman/noise) `noise.pnoise1` function.
+"""
 function pnoise1(x::Float32)
     repeat = 1024
     base = 0

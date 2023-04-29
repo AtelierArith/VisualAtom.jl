@@ -1,3 +1,8 @@
+"""
+    Config
+
+A struct representing the configuration for generating atom instances and images.
+"""
 struct Config
     #=
     for category_id in 0:(num_categories-1)
@@ -42,10 +47,36 @@ struct Config
     max_line_width::Float64
 end
 
+Config(config_path::AbstractString)
+
+"""
+    Config(config_path::AbstractString)
+
+Create a new `Config` instance by reading and parsing
+the configuration file at the specified `config_path`.
+
+# Arguments
+- `config_path::AbstractString`: Path to the configuration file (TOML format).
+
+# Returns
+- `Config`: A new `Config` instance with properties read from the configuration file.
+"""
 function Config(config_path::AbstractString)
     tostruct(Config, TOML.parsefile(config_path))
 end
 
+"""
+    Atom(config::Config)
+    Atom([rng=GLOBAL_RNG], config::Config)
+
+`Atom` struct representing the data structure proposed in [Visual Atoms: Pre-training Vision Transformers with Sinusoidal Waves](https://arxiv.org/abs/2303.01112).
+
+# Arguments
+- `config::Config`: A configuration object containing the parameter ranges.
+
+# Returns
+- `Atom`: A new `Atom` instance with randomly generated properties.
+"""
 Base.@kwdef struct Atom
     q::Int
     K::Int
@@ -60,6 +91,15 @@ Base.@kwdef struct Atom
     oval_rate_y::Float64
 end
 
+"""
+    Atom(rng::AbstractRNG, config::Config)
+# Arguments
+- `rng::AbstractRNG`: The random number generator to be used.
+- `config::Config`: A configuration object containing the parameter ranges.
+
+# Returns
+- `Atom`: A new `Atom` instance with randomly generated properties.
+"""
 function Atom(rng::AbstractRNG, config::Config)
     q = rand(rng, config.vertex_num_min:config.vertex_num_max) # vertex_number
     K = rand(rng, config.line_num_min:config.line_num_max) # line_draw_num
