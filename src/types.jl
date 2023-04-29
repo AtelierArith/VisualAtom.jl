@@ -47,8 +47,6 @@ struct Config
     max_line_width::Float64
 end
 
-Config(config_path::AbstractString)
-
 """
     Config(config_path::AbstractString)
 
