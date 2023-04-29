@@ -6,6 +6,7 @@ using VisualAtom: generate_instances
 using ToStruct: tostruct
 using ProgressMeter: @showprogress
 
+# https://docs.julialang.org/en/v1/stdlib/Distributed/
 @everywhere using VisualAtom: generate_instances
 
 function generate_dataset(
@@ -18,7 +19,7 @@ function generate_dataset(
     num_categories = config.num_categories
     num_instances = config.num_instances
 
-    @info "Generate VisualAtom_dataset" num_categories num_instances nprocs()
+    @info "Generate VisualAtom dataset" num_categories num_instances nprocs()
     @showprogress @distributed for category_id in 0:(num_categories-1)
         generate_instances(config; save_root, category_id, num_instances)
     end
