@@ -52,7 +52,7 @@ This will create `VisualAtom_dataset` and 1000 * 1000 images will be generated.
 
 <img width="860" alt="image" src="https://user-images.githubusercontent.com/16760547/235294665-b988f394-cc48-4bfe-ae7b-845af8cda9cd.png">
 
-The following screenshot was captured while running on an iMac 2019.
+The following screenshot was captured while running on iMac 2019 with `--procs 16`.
 
 <img src="https://user-images.githubusercontent.com/16760547/235292892-d0dcc052-d0c3-45c4-bc83-40fa708847d5.png">
 
