@@ -46,7 +46,8 @@ Easy! Just run:
 $ julia --project=@. --procs auto run.jl
 ```
 
-1000 * 1000 images will be generated. The program ran on a 2019 iMac.
+This will create `VisualAtom_dataset` and 1000 * 1000 images will be generated.
+The following screenshot was captured while running on an iMac 2019.
 
 <img src="https://user-images.githubusercontent.com/16760547/235292892-d0dcc052-d0c3-45c4-bc83-40fa708847d5.png">
 
