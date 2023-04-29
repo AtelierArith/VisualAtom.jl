@@ -26,6 +26,13 @@ jobs:
           - x64
     steps:
       - uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Install Python noise package
+        run: |
+          pip3 install noise
       - uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.version }}
