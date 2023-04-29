@@ -15,6 +15,11 @@ USER root
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
+    python3 \
+    python3-dev \
+    python3-distutils \
+    python3-venv \
+    python3-pip \
     git \
     unzip \
     wget \
@@ -34,7 +39,10 @@ USER ${USER}
 
 WORKDIR /workspace/VisualAtom.jl
 
-RUN julia -e 'using Pkg; Pkg.add(["Revise", "LiveServer", "Pluto", "PlutoUI"])' && \
+# Perlin noise library for Python: https://github.com/caseman/noiseRUN 
+RUN pip3 install noise
+
+RUN julia -e 'using Pkg; Pkg.add(["Revise", "LiveServer", "Pluto", "PlutoUI", "PyCall"])' && \
     julia -e 'using Pkg; Pkg.add(["BenchmarkTools", "ProfileSVG", "JET", "JuliaFormatter"])'
 
 
