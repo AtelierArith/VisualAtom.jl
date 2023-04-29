@@ -20,6 +20,7 @@ services:
 
   shell:
     image: visualatomjl
+    shm_size: '2gb'
     container_name: visualatomjl-julia
     volumes:
       - ./:/workspace/VisualAtom.jl
