@@ -1,3 +1,5 @@
+VisualAtom_dataset
+*.png
 *.gif
 .DS_Store
 /Manifest.toml
