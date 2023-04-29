@@ -5,7 +5,7 @@ using PyCall
 using VisualAtom
 
 # \lesssim<tab>
-≲(x,y) = (x < y) | (x ≈ y)
+≲(x, y) = (x < y) | (x ≈ y)
 
 @testset "pnoise1" begin
     pynoise = pyimport("noise")
@@ -24,7 +24,7 @@ end
     @test config.line_num_min == 1
     @test config.line_num_max == 200
     @test config.perlin_min == 0
-    @test config.freq_min == 0   
+    @test config.freq_min == 0
     @test config.freq_max == 20
     @test config.oval_rate == 2
     @test config.radius_min == 10
@@ -55,11 +55,11 @@ end
     @test all(-1 .≲ data)
     @test all(data .≲ 2)
 
-    @test typeof(VisualAtom.uniform(rng, -1f0, 1f0)) == Float32
-    @test typeof(VisualAtom.uniform(rng, -1f0, 1)) == Float32
-    @test typeof(VisualAtom.uniform(rng, -1, 1f0)) == Float32
-    @test typeof(VisualAtom.uniform(rng, -1., 1.)) == Float64
-    @test typeof(VisualAtom.uniform(rng, -1f0, 1.)) == Float64
+    @test typeof(VisualAtom.uniform(rng, -1.0f0, 1.0f0)) == Float32
+    @test typeof(VisualAtom.uniform(rng, -1.0f0, 1)) == Float32
+    @test typeof(VisualAtom.uniform(rng, -1, 1.0f0)) == Float32
+    @test typeof(VisualAtom.uniform(rng, -1.0, 1.0)) == Float64
+    @test typeof(VisualAtom.uniform(rng, -1.0f0, 1.0)) == Float64
     @test typeof(VisualAtom.uniform(rng, -1, 1)) == Float64
 end
 
@@ -68,10 +68,10 @@ end
     @test all(-1 .≲ data)
     @test all(data .≲ 2)
 
-    @test typeof(VisualAtom.uniform(-1f0, 1f0)) == Float32
-    @test typeof(VisualAtom.uniform(-1f0, 1)) == Float32
-    @test typeof(VisualAtom.uniform(-1, 1f0)) == Float32
-    @test typeof(VisualAtom.uniform(-1., 1.)) == Float64
-    @test typeof(VisualAtom.uniform(-1f0, 1.)) == Float64
+    @test typeof(VisualAtom.uniform(-1.0f0, 1.0f0)) == Float32
+    @test typeof(VisualAtom.uniform(-1.0f0, 1)) == Float32
+    @test typeof(VisualAtom.uniform(-1, 1.0f0)) == Float32
+    @test typeof(VisualAtom.uniform(-1.0, 1.0)) == Float64
+    @test typeof(VisualAtom.uniform(-1.0f0, 1.0)) == Float64
     @test typeof(VisualAtom.uniform(-1, 1)) == Float64
 end

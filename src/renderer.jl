@@ -95,4 +95,3 @@ function generate_instances(config::Config;
     rng = Xoshiro(seed)
     save_images(rng, atom; save_dir, num_instances, H, W)
 end
-
