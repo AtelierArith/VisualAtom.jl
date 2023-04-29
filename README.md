@@ -80,3 +80,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - The original Python implementation: https://github.com/masora1030/CVPR2023-FDSL-on-VisualAtom
 - The authors of the CVPR 2023 paper for their novel work on the FDSL algorithm
+- The authors of Perlin noise library for Python: https://github.com/caseman/noise
+- [JuliaLang](https://julialang.org/) and [its community](https://julialang.org/community/discourse/)
+- ChatGPT-3.5/ChatGPT-4
