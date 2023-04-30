@@ -23,4 +23,5 @@ end
 
 uniform(a::Real, b::Real) = uniform(Random.default_rng(), a, b)
 
-noiseε(rng::AbstractRNG) = pnoise1(uniform(rng, 0, 10000)) - 1
+noiseε(rng::AbstractRNG) = pnoise1(uniform(rng, 0.0, 10000.0)) - 1
+noiseε() = noiseε(Random.default_rng())
