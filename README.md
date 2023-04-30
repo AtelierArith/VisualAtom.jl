@@ -48,7 +48,7 @@ Easy! Just run:
 $ julia --project=@. --procs auto run.jl
 ```
 
-This will create `VisualAtom_dataset` and 1000 * 1000 images will be generated.
+It will create a directory `VisualAtom_dataset` by default and 1000 * 1000 images will be generated.
 
 <img width="860" alt="image" src="https://user-images.githubusercontent.com/16760547/235294665-b988f394-cc48-4bfe-ae7b-845af8cda9cd.png">
 
