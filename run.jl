@@ -24,11 +24,12 @@ function generate_dataset(
         generate_instances(config; save_root, category_id, num_instances)
         true
     end
-    println("Done! $cnt classes should be generated in $(save_root) directory")
+    @info "Done! $cnt classes should be generated in $(save_root) directory"
 end
 
-if abspath(PROGRAM_FILE) == @__FILE__
+if abspath(Base.PROGRAM_FILE) == @__FILE__
     config_path = "config.toml"
     save_root = "VisualAtom_dataset"
     @sync begin @time generate_dataset(config_path, save_root) end
+    @info "Exit $(Base.PROGRAM_FILE)"
 end
