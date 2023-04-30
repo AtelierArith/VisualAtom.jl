@@ -9,17 +9,17 @@ using Images
 
 # ╔═╡ 3860e508-f040-4f1a-9701-04e5d63d2594
 begin
-	using TOML
-	using Random
+    using TOML
+    using Random
 end
 
 # ╔═╡ f0f4d8e6-0588-4cbe-a5f3-b28f44482867
 begin
-	using ToStruct: tostruct
-	using ImageDraw
-	using ImageCore
-	using StatsBase
-	using StaticArrays
+    using ToStruct: tostruct
+    using ImageDraw
+    using ImageCore
+    using StatsBase
+    using StaticArrays
 end
 
 # ╔═╡ 1adcba6f-665e-4637-b147-fc04da0d21ce
@@ -39,260 +39,260 @@ pynoise = pyimport("noise")
 
 # ╔═╡ c1916bb6-5dcd-4276-8398-5562e04ebf3f
 begin
-	const PERM = @SVector UInt8[
-	    151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140,
-	    36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120,
-	    234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33,
-	    88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71,
-	    134, 139, 48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133,
-	    230, 220, 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161,
-	    1, 216, 80, 73, 209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130,
-	    116, 188, 159, 86, 164, 100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250,
-	    124, 123, 5, 202, 38, 147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227,
-	    47, 16, 58, 17, 182, 189, 28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44,
-	    154, 163, 70, 221, 153, 101, 155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98,
-	    108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34,
-	    242, 193, 238, 210, 144, 12, 191, 179, 162, 241, 81, 51, 145, 235, 249, 14,
-	    239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121,
-	    50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243,
-	    141, 128, 195, 78, 66, 215, 61, 156, 180, 151, 160, 137, 91, 90, 15, 131,
-	    13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37,
-	    240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252,
-	    219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125,
-	    136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158,
-	    231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245,
-	    40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187,
-	    208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164, 100, 109, 198,
-	    173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126,
-	    255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189, 28, 42, 223,
-	    183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167,
-	    43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232, 178, 185,
-	    112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179,
-	    162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199,
-	    106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236,
-	    205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156,
-	    180,
-	]
-	
-	function grad1(hash::Integer, x::Float32)
-	    #=
-		g = (hash & 7) + 1.0f0
-	    if !iszero(hash & 8)
-	        g = -1.0f0
-	    end
-		=#
-		g = ifelse(!iszero(hash & 8), -1.0f0, (hash & 7) + 1.0f0)
-	    return g * x
-	end
-	
-	lerp(t, a, b) = a + t * (b - a)
-	
-	"""
-	    pnoise1(x)
-	
-	Perlin noise -- pure Julia implementation.
-	The results of this computation are consistent with
-	the [Python package's](https://github.com/caseman/noise) `noise.pnoise1` function.
-	"""
-	function pnoise1(x::Float32)
-	    repeat = Int32(1024)
-	    base = Int32(0)
-	    #i = floor(Int32, x) % repeat
-		i = unsafe_trunc(Int32,round(x, RoundDown)) % repeat
-	    ii = (i + one(Int)) % repeat
-	    i = (i & UInt8(255)) + base
-	    ii = (ii & UInt8(255)) + base
-	    x -= floor(x)
-	    fx = x * x * x * (x * (x * Int32(6) - Int32(15)) + Int32(10))
-	    f32data = lerp(
-			fx, 
-			grad1(PERM[begin+i], x), 
-			grad1(PERM[begin+ii], x - one(Int32)),
-		) * 0.4f0
-	    return Float64(f32data)
-	end
-	
-	pnoise1(x::Real) = pnoise1(Float32(x))
+    const PERM = @SVector UInt8[
+        151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140,
+        36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120,
+        234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33,
+        88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71,
+        134, 139, 48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133,
+        230, 220, 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161,
+        1, 216, 80, 73, 209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130,
+        116, 188, 159, 86, 164, 100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250,
+        124, 123, 5, 202, 38, 147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227,
+        47, 16, 58, 17, 182, 189, 28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44,
+        154, 163, 70, 221, 153, 101, 155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98,
+        108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34,
+        242, 193, 238, 210, 144, 12, 191, 179, 162, 241, 81, 51, 145, 235, 249, 14,
+        239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121,
+        50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243,
+        141, 128, 195, 78, 66, 215, 61, 156, 180, 151, 160, 137, 91, 90, 15, 131,
+        13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37,
+        240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252,
+        219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125,
+        136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158,
+        231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245,
+        40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187,
+        208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164, 100, 109, 198,
+        173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126,
+        255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189, 28, 42, 223,
+        183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167,
+        43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232, 178, 185,
+        112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179,
+        162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199,
+        106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236,
+        205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156,
+        180,
+    ]
+
+    function grad1(hash::Integer, x::Float32)
+        #=
+        g = (hash & 7) + 1.0f0
+         if !iszero(hash & 8)
+             g = -1.0f0
+         end
+        =#
+        g = ifelse(!iszero(hash & 8), -1.0f0, (hash & 7) + 1.0f0)
+        return g * x
+    end
+
+    lerp(t, a, b) = a + t * (b - a)
+
+    """
+        pnoise1(x)
+
+    Perlin noise -- pure Julia implementation.
+    The results of this computation are consistent with
+    the [Python package's](https://github.com/caseman/noise) `noise.pnoise1` function.
+    """
+    function pnoise1(x::Float32)
+        repeat = Int32(1024)
+        base = Int32(0)
+        #i = floor(Int32, x) % repeat
+        i = unsafe_trunc(Int32, round(x, RoundDown)) % repeat
+        ii = (i + one(Int)) % repeat
+        i = (i & UInt8(255)) + base
+        ii = (ii & UInt8(255)) + base
+        x -= floor(x)
+        fx = x * x * x * (x * (x * Int32(6) - Int32(15)) + Int32(10))
+        f32data =
+            lerp(
+                fx,
+                grad1(PERM[begin+i], x),
+                grad1(PERM[begin+ii], x - one(Int32)),
+            ) * 0.4f0
+        return Float64(f32data)
+    end
+
+    pnoise1(x::Real) = pnoise1(Float32(x))
 end
 
 # ╔═╡ 4d740122-ee0f-4ff7-98d6-5199cbba9c0c
 begin
-	function uniform(rng::AbstractRNG, a::T, b::T) where {T<:AbstractFloat}
-	    return (b - a) * rand(rng, T) + a
-	end
-	
-	function uniform(rng::AbstractRNG, a::Real, b::Real)
-	    uniform(rng, float.(promote(a, b))...)
-	end
-	
-	uniform(a::Real, b::Real) = uniform(Random.default_rng(), a, b)
-	
-	noiseε(rng::AbstractRNG) = pnoise1(uniform(rng, 0., 10000.)) - 1
+    function uniform(rng::AbstractRNG, a::T, b::T) where {T<:AbstractFloat}
+        return (b - a) * rand(rng, T) + a
+    end
+
+    function uniform(rng::AbstractRNG, a::Real, b::Real)
+        uniform(rng, float.(promote(a, b))...)
+    end
+
+    uniform(a::Real, b::Real) = uniform(Random.default_rng(), a, b)
+
+    noiseε(rng::AbstractRNG) = pnoise1(uniform(rng, 0.0, 10000.0)) - 1
 end
 
 # ╔═╡ 2820b7af-cd23-4d58-ae45-b525eab5dbca
 let
-	rng = Xoshiro(0)
-	xs = uniform(rng, 0, 10000)
-	@assert pynoise.pnoise1(xs) == pnoise1.(xs)
+    rng = Xoshiro(0)
+    xs = uniform(rng, 0, 10000)
+    @assert pynoise.pnoise1(xs) == pnoise1.(xs)
 end
 
 # ╔═╡ 34227875-a989-4555-991e-8ae814a5b000
 let
-	rng = Xoshiro(0)
-	x = rand(rng)
-	@profview begin
-		for _ in 1:10000000
-			pnoise1(x)
-		end
-	end
+    rng = Xoshiro(0)
+    x = rand(rng)
+    @profview begin
+        for _ in 1:10000000
+            pnoise1(x)
+        end
+    end
 end
 
 # ╔═╡ d17eb2df-eb24-42a8-8e25-7c2e93d505b9
 let
-	rng = Xoshiro(0)
-	f = rand(rng, Float32)
-	@code_warntype pnoise1(f)
+    rng = Xoshiro(0)
+    f = rand(rng, Float32)
+    @code_warntype pnoise1(f)
 end
 
 # ╔═╡ 265d6e02-c05a-4fbf-9d0f-71f04c44d7fe
 let
-	rng = Xoshiro(0)
-	@btime pnoise1($(rand(rng)))
+    rng = Xoshiro(0)
+    @btime pnoise1($(rand(rng)))
 end
 
 # ╔═╡ 3394c319-0ff0-41e1-8292-137c4078c805
 begin
-	"""
-	    Config
-	
-	A struct representing the configuration for generating atom instances and images.
-	"""
-	struct Config
-	    #=
-	    for category_id in 0:(num_categories-1)
-	    # setup Atom
-	    for instance_id in 0:(num_instances-1)
-	    # create canvas
-	    # draw waves on canvas and save as image
-	    end
-	    end
-	    =#
-	    num_categories::Int
-	    num_instances::Int
-	    #=
-	    H = W = image_size
-	    canvas = zeros(RGB{N08f}, H, W)
-	    =#
-	    image_size::Int
-	
-	    # q ∼ rand(rng, vertex_num_min:vertex_num_max)
-	    vertex_num_min::Int
-	    vertex_num_max::Int
-	
-	    # K ∼ rand(rng, line_num_min:line_num_max)
-	    line_num_min::Int
-	    line_num_max::Int
-	
-	    # η ∼ uniform(rng, perlin_min, perlin_min + 4)
-	    perlin_min::Float64
-	
-	    # n₁, n₂ = sample(rng, freq_min:freq_max, 2, replace=false)
-	    freq_min::Int
-	    freq_max::Int
-	
-	    # oval_rate_x ∼ uniform(rng, 1, oval_rate)
-	    # oval_rate_y ∼ uniform(rng, 1, oval_rate)
-	    oval_rate::Float64
-	
-	    # radius ∼ rand(rng, radius_min:(radius_min+50))
-	    radius_min::Int
-	
-	    # line_width = uniform(rng, 0.0, max_line_width)
-	    max_line_width::Float64
-	end
-	
-	"""
-	    Config(config_path::AbstractString)
-	
-	Create a new `Config` instance by reading and parsing
-	the configuration file at the specified `config_path`.
-	
-	# Arguments
-	- `config_path::AbstractString`: Path to the configuration file (TOML format).
-	
-	# Returns
-	- `Config`: A new `Config` instance with properties read from the configuration file.
-	"""
-	function Config(config_path::AbstractString)
-	    tostruct(Config, TOML.parsefile(config_path))
-	end
-	
-	"""
-	    Atom(config::Config)
-	    Atom([rng=GLOBAL_RNG], config::Config)
-	
-	`Atom` struct representing the data structure proposed in [Visual Atoms: Pre-training Vision Transformers with Sinusoidal Waves](https://arxiv.org/abs/2303.01112).
-	
-	# Arguments
-	- `config::Config`: A configuration object containing the parameter ranges.
-	
-	# Returns
-	- `Atom`: A new `Atom` instance with randomly generated properties.
-	"""
-	Base.@kwdef struct Atom
-	    q::Int
-	    K::Int
-	    η::Float64
-	    line_width::Float64
-	    radius::Int
-	    n₁::Int
-	    n₂::Int
-	    λ₁::Float64
-	    λ₂::Float64
-	    oval_rate_x::Float64
-	    oval_rate_y::Float64
-	end
-	
-	"""
-	    Atom(rng::AbstractRNG, config::Config)
-	# Arguments
-	- `rng::AbstractRNG`: The random number generator to be used.
-	- `config::Config`: A configuration object containing the parameter ranges.
-	
-	# Returns
-	- `Atom`: A new `Atom` instance with randomly generated properties.
-	"""
-	function Atom(rng::AbstractRNG, config::Config)
-	    q = rand(rng, config.vertex_num_min:config.vertex_num_max) # vertex_number
-	    K = rand(rng, config.line_num_min:config.line_num_max) # line_draw_num
-	    perlin_max = config.perlin_min + 4
-	    η = uniform(rng, config.perlin_min, perlin_max)
-	
-	    line_width = uniform(rng, 0.0, config.max_line_width)
-	    radius_max = config.radius_min + 50
-	    radius = rand(rng, config.radius_min:radius_max)
-	    n₁, n₂ = sample(rng, config.freq_min:config.freq_max, 2, replace=false)
-	    λ₁ = λ₂ = 0.5
-	    oval_rate_x = uniform(rng, 1, config.oval_rate)
-	    oval_rate_y = uniform(rng, 1, config.oval_rate)
-	    Atom(;
-	        q,
-	        K,
-	        η,
-	        line_width,
-	        radius,
-	        n₁,
-	        n₂,
-	        λ₁,
-	        λ₂,
-	        oval_rate_x,
-	        oval_rate_y,
-	    )
-	end
-	
-	Atom(config::Config) = Atom(Random.default_rng(), config)
-	
+    """
+        Config
+
+    A struct representing the configuration for generating atom instances and images.
+    """
+    struct Config
+        #=
+         for category_id in 0:(num_categories-1)
+         # setup Atom
+         for instance_id in 0:(num_instances-1)
+         # create canvas
+         # draw waves on canvas and save as image
+         end
+         end
+         =#
+        num_categories::Int
+        num_instances::Int
+        #=
+         H = W = image_size
+         canvas = zeros(RGB{N08f}, H, W)
+         =#
+        image_size::Int
+
+        # q ∼ rand(rng, vertex_num_min:vertex_num_max)
+        vertex_num_min::Int
+        vertex_num_max::Int
+
+        # K ∼ rand(rng, line_num_min:line_num_max)
+        line_num_min::Int
+        line_num_max::Int
+
+        # η ∼ uniform(rng, perlin_min, perlin_min + 4)
+        perlin_min::Float64
+
+        # n₁, n₂ = sample(rng, freq_min:freq_max, 2, replace=false)
+        freq_min::Int
+        freq_max::Int
+
+        # oval_rate_x ∼ uniform(rng, 1, oval_rate)
+        # oval_rate_y ∼ uniform(rng, 1, oval_rate)
+        oval_rate::Float64
+
+        # radius ∼ rand(rng, radius_min:(radius_min+50))
+        radius_min::Int
+
+        # line_width = uniform(rng, 0.0, max_line_width)
+        max_line_width::Float64
+    end
+
+    """
+        Config(config_path::AbstractString)
+
+    Create a new `Config` instance by reading and parsing
+    the configuration file at the specified `config_path`.
+
+    # Arguments
+    - `config_path::AbstractString`: Path to the configuration file (TOML format).
+
+    # Returns
+    - `Config`: A new `Config` instance with properties read from the configuration file.
+    """
+    function Config(config_path::AbstractString)
+        tostruct(Config, TOML.parsefile(config_path))
+    end
+
+    """
+        Atom(config::Config)
+        Atom([rng=GLOBAL_RNG], config::Config)
+
+    `Atom` struct representing the data structure proposed in [Visual Atoms: Pre-training Vision Transformers with Sinusoidal Waves](https://arxiv.org/abs/2303.01112).
+
+    # Arguments
+    - `config::Config`: A configuration object containing the parameter ranges.
+
+    # Returns
+    - `Atom`: A new `Atom` instance with randomly generated properties.
+    """
+    Base.@kwdef struct Atom
+        q::Int
+        K::Int
+        η::Float64
+        line_width::Float64
+        radius::Int
+        n₁::Int
+        n₂::Int
+        λ₁::Float64
+        λ₂::Float64
+        oval_rate_x::Float64
+        oval_rate_y::Float64
+    end
+
+    """
+        Atom(rng::AbstractRNG, config::Config)
+    # Arguments
+    - `rng::AbstractRNG`: The random number generator to be used.
+    - `config::Config`: A configuration object containing the parameter ranges.
+
+    # Returns
+    - `Atom`: A new `Atom` instance with randomly generated properties.
+    """
+    function Atom(rng::AbstractRNG, config::Config)
+        q = rand(rng, config.vertex_num_min:config.vertex_num_max) # vertex_number
+        K = rand(rng, config.line_num_min:config.line_num_max) # line_draw_num
+        perlin_max = config.perlin_min + 4
+        η = uniform(rng, config.perlin_min, perlin_max)
+
+        line_width = uniform(rng, 0.0, config.max_line_width)
+        radius_max = config.radius_min + 50
+        radius = rand(rng, config.radius_min:radius_max)
+        n₁, n₂ = sample(rng, config.freq_min:config.freq_max, 2, replace=false)
+        λ₁ = λ₂ = 0.5
+        oval_rate_x = uniform(rng, 1, config.oval_rate)
+        oval_rate_y = uniform(rng, 1, config.oval_rate)
+        Atom(;
+            q,
+            K,
+            η,
+            line_width,
+            radius,
+            n₁,
+            n₂,
+            λ₁,
+            λ₂,
+            oval_rate_x,
+            oval_rate_y,
+        )
+    end
+
+    Atom(config::Config) = Atom(Random.default_rng(), config)
 end
 
 # ╔═╡ 33c821e2-e6de-11ed-2c62-375c1fc3fdf9
@@ -331,15 +331,15 @@ function render!(
     In this line, memory allocation occurs to generate an array.
     However, Julia is still faster compared to Python implementation.
     =#
-	vertex_x = Vector{Float64}(undef, 1+atom.q)
-	vertex_y = Vector{Float64}(undef, 1+atom.q)
-	noise_x = Vector{Float64}(undef, 1+atom.q)
-	noise_y = Vector{Float64}(undef, 1+atom.q)
+    vertex_x = Vector{Float64}(undef, 1 + atom.q)
+    vertex_y = Vector{Float64}(undef, 1 + atom.q)
+    noise_x = Vector{Float64}(undef, 1 + atom.q)
+    noise_y = Vector{Float64}(undef, 1 + atom.q)
 
-	θs = [i * 2π / q for i in 0:q]
+    θs = [i * 2π / q for i in 0:q]
 
-	for i in eachindex(θs, vertex_x, vertex_y)
-		s, c = sincos(θs[i])
+    for i in eachindex(θs, vertex_x, vertex_y)
+        s, c = sincos(θs[i])
         vertex_x[i] = c * radius * oval_rate_x + offset_w
         vertex_y[i] = s * radius * oval_rate_y + offset_h
     end
@@ -347,25 +347,25 @@ function render!(
     for _ in 1:K
         grayscale = rand(rng)
         linecolor = RGB{N0f8}(grayscale, grayscale, grayscale)
-    	
-		for i in eachindex(θs, noise_x, noise_y)
+
+        for i in eachindex(θs, noise_x, noise_y)
             θᵢ = θs[i]
             noise_x[i] = η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
             noise_y[i] = η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
         end
 
-		# sync begin and end
+        # sync begin and end
         noise_x[end] = noise_x[begin]
         noise_y[end] = noise_y[begin]
 
         for i in eachindex(θs, vertex_x, vertex_y, noise_x, noise_y)
             # I don't get it why we need `line_width`.
-			s, c = sincos(θs[i])
+            s, c = sincos(θs[i])
             vertex_x[i] -= c * (noise_x[i] - line_width)
             vertex_y[i] -= s * (noise_y[i] - line_width)
         end
 
-		for i in 1:q
+        for i in 1:q
             p1 = ImageDraw.Point(floor(Int, vertex_x[i]), floor(Int, vertex_y[i]))
             p2 = ImageDraw.Point(floor(Int, vertex_x[i+1]), floor(Int, vertex_y[i+1]))
             # Julia is fast.
@@ -396,30 +396,30 @@ end
 
 # ╔═╡ a838f521-8561-4523-9488-a72e5eb08d24
 let
-	rng = Xoshiro(1)
-	config = Config("../../config.toml")
-	atom = Atom(rng, config)
-	@show atom.q, atom.K
-	canvas = zeros(RGB{N0f8}, 512, 512)
-	@benchmark begin
-		atom = Atom($rng, $config)
-		render!(
-			$rng, $atom, $canvas
-		)
-	end
+    rng = Xoshiro(1)
+    config = Config("../../config.toml")
+    atom = Atom(rng, config)
+    @show atom.q, atom.K
+    canvas = zeros(RGB{N0f8}, 512, 512)
+    @benchmark begin
+        atom = Atom($rng, $config)
+        render!(
+            $rng, $atom, $canvas,
+        )
+    end
 end
 
 # ╔═╡ 4d028653-d3f7-4fcd-8a13-82f552a4be67
 let
-	rng = Xoshiro(1)
-	config = Config("../../config.toml")
-	atom = Atom(rng, config)
-	@show atom.q, atom.K
-	canvas = zeros(RGB{N0f8}, 512, 512)
-	render!(
-		rng, atom, canvas
-	)
-	canvas
+    rng = Xoshiro(1)
+    config = Config("../../config.toml")
+    atom = Atom(rng, config)
+    @show atom.q, atom.K
+    canvas = zeros(RGB{N0f8}, 512, 512)
+    render!(
+        rng, atom, canvas,
+    )
+    canvas
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
