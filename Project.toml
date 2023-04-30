@@ -18,6 +18,7 @@ ToStruct = "43ec2cc1-0e50-5406-a854-b7ff8fdb8dad"
 
 [compat]
 ImageDraw = "0.2"
+FixedPointNumbers = "0.8"
 julia = "1.8"
 
 [extras]
