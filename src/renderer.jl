@@ -38,46 +38,41 @@ function render!(
     oval_rate_x = atom.oval_rate_x
     oval_rate_y = atom.oval_rate_y
 
-    θ = 2π / q
-
     H, W = size(canvas)
     offset_h = (H + H * uniform(rng, -1, 1)) / 2
     offset_w = (W + W * uniform(rng, -1, 1)) / 2
 
-    #=
-    In this line, memory allocation occurs to generate an array.
-    However, Julia is still faster compared to Python implementation.
-    =#
-    vertex_x = map(0:q) do i
-        θᵢ = i * θ
-        cos(θᵢ) * radius * oval_rate_x + offset_w
-    end
+    vertex_x = Vector{Float64}(undef, 1 + atom.q)
+    vertex_y = Vector{Float64}(undef, 1 + atom.q)
+    noise_x = Vector{Float64}(undef, 1 + atom.q)
+    noise_y = Vector{Float64}(undef, 1 + atom.q)
+    θs = [i * 2π / q for i in 0:q]
 
-    vertex_y = map(0:q) do i
-        θᵢ = i * θ
-        sin(θᵢ) * radius * oval_rate_y + offset_h
+    for i in eachindex(θs, vertex_x, vertex_y)
+        s, c = sincos(θs[i])
+        vertex_x[i] = c * radius * oval_rate_x + offset_w
+        vertex_y[i] = s * radius * oval_rate_y + offset_h
     end
 
     for _ in 1:K
         grayscale = rand(rng)
         linecolor = RGB{N0f8}(grayscale, grayscale, grayscale)
-        noise_x = map(0:q) do i
-            θᵢ = i * θ
-            η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
-        end
-        noise_y = map(0:q) do i
-            θᵢ = i * θ
-            η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
+
+        for i in eachindex(θs, noise_x, noise_y)
+            θᵢ = θs[i]
+            noise_x[i] = η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
+            noise_y[i] = η * noiseε(rng) - λ₁ * sin(n₁ * θᵢ) - λ₂ * sin(n₂ * θᵢ)
         end
 
+        # sync begin and end
         noise_x[end] = noise_x[begin]
         noise_y[end] = noise_y[begin]
 
-        for i in 0:q
-            θᵢ = i * θ
+        for i in eachindex(θs, vertex_x, vertex_y, noise_x, noise_y)
             # I don't get it why we need `line_width`.
-            vertex_x[begin+i] -= cos(θᵢ) * (noise_x[begin+i] - line_width)
-            vertex_y[begin+i] -= sin(θᵢ) * (noise_y[begin+i] - line_width)
+            s, c = sincos(θs[i])
+            vertex_x[i] -= c * (noise_x[i] - line_width)
+            vertex_y[i] -= s * (noise_y[i] - line_width)
         end
 
         for i in 1:q
