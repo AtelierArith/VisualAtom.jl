@@ -20,10 +20,11 @@ function generate_dataset(
     num_instances = config.num_instances
 
     @info "Generate VisualAtom dataset" num_categories num_instances nprocs()
-    @showprogress @distributed for category_id in 0:(num_categories-1)
+    cnt = @showprogress "Generating..." @distributed (+) for category_id in 0:(num_categories-1)
         generate_instances(config; save_root, category_id, num_instances)
+        true
     end
-    println("Done! checkout $(save_root)")
+    println("Done! $cnt classes should be generated in $(save_root) directory")
 end
 
 if abspath(PROGRAM_FILE) == @__FILE__
