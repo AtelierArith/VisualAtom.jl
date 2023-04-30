@@ -20,7 +20,8 @@ function generate_dataset(
     num_instances = config.num_instances
 
     @info "Generate VisualAtom dataset" num_categories num_instances nprocs()
-    cnt = @showprogress "Generating..." @distributed (+) for category_id in 0:(num_categories-1)
+    cnt = @showprogress "Generating..." @distributed (+) for category_id in
+                                                       0:(num_categories-1)
         generate_instances(config; save_root, category_id, num_instances)
         true
     end
@@ -30,6 +31,8 @@ end
 if abspath(Base.PROGRAM_FILE) == @__FILE__
     config_path = "config.toml"
     save_root = "VisualAtom_dataset"
-    @sync begin @time generate_dataset(config_path, save_root) end
+    @sync begin
+        @time generate_dataset(config_path, save_root)
+    end
     @info "Exit $(Base.PROGRAM_FILE)"
 end
