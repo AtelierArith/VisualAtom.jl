@@ -30,5 +30,5 @@ end
 if abspath(PROGRAM_FILE) == @__FILE__
     config_path = "config.toml"
     save_root = "VisualAtom_dataset"
-    @time generate_dataset(config_path, save_root)
+    @sync begin @time generate_dataset(config_path, save_root) end
 end
