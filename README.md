@@ -52,24 +52,41 @@ It will create a directory `VisualAtom_dataset` by default and 1000 * 1000 image
 
 <img width="860" alt="image" src="https://user-images.githubusercontent.com/16760547/235294665-b988f394-cc48-4bfe-ae7b-845af8cda9cd.png">
 
-The following screenshot was captured while running on iMac 2019 with `--procs 16`.
+The following screenshot was captured while running on my iMac 2019 with `--procs 16`.
 
 <img src="https://user-images.githubusercontent.com/16760547/235292892-d0dcc052-d0c3-45c4-bc83-40fa708847d5.png">
 
 If you are surprised by these results, you may want to consider moving from Python to Julia.
 
-### Tips
+### Tip
 
 > `--procs {N|auto}`
 >  Integer value N launches N additional local worker processes
 >  "auto" launches as many workers as the number of local CPU threads (logical cores)
+
+See [Command-line switches for Julia](https://docs.julialang.org/en/v1/manual/command-line-options/#Command-line-switches-for-Julia) to learn more.
 
 ### Another easy shortcut
 
 Having trouble installing Julia? You can save yourself the trouble of installation by using a Docker container.
 
 ```console
-$ make && docker compose run --rm shell julia -p auto run.jl
+$ make && docker compose run --rm shell julia --procs auto run.jl
+```
+
+The entrypoint script `run.jl` uses parallel processing via `Distributed` module (Julia's standard library).
+
+For those who want to run with multiple threads, use `run_mt.jl`:
+
+```console
+$ make && docker compose run --rm shell julia --threads auto run_mt.jl
+```
+
+You can adjust the number of threads using the `-t` or `--threads` option:
+
+```console
+-t, --threads {N|auto}     Enable N threads; "auto" currently sets N to the number of local
+                            CPU threads but this might change in the future
 ```
 
 ## License
