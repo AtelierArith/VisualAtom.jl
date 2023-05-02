@@ -14,7 +14,7 @@ This repository contains [Julia](https://julialang.org/) implementation of [`vis
 $ git clone https://github.com/AtelierArith/VisualAtom.jl.git
 $ cd VisualAtom.jl
 $ make
-$ docker compose run --rm shell julia -p auto run.jl
+$ docker compose run --rm shell julia --procs auto run.jl
 ```
 
 That's it. You'll get `VisualAtom_dataset` directory within an hour.
