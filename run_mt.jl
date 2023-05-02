@@ -1,4 +1,4 @@
-using .Threads: @atomic, @threads, nthreads
+using Base.Threads: @atomic, @threads, nthreads
 using TOML
 
 using VisualAtom: Config
