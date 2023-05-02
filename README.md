@@ -70,6 +70,19 @@ Having trouble installing Julia? You can save yourself the trouble of installati
 
 ```console
 $ make && docker compose run --rm shell julia -p auto run.jl
+The entrypoint script `run.jl` uses parallel processing via `Distributed` module (Julia's standard library).
+
+For those who want to run with multiple threads, use `run_mt.jl`:
+
+```console
+$ make && docker compose run --rm shell julia --threads auto run_mt.jl
+```
+
+You can adjust the number of threads using the `-t` or `--threads` option:
+
+```console
+-t, --threads {N|auto}     Enable N threads; "auto" currently sets N to the number of local
+                            CPU threads but this might change in the future
 ```
 
 ## License

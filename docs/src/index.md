@@ -23,4 +23,10 @@ That's it. You'll get `VisualAtom_dataset` directory within an hour.
 <img width="860" alt="image" src="https://user-images.githubusercontent.com/16760547/235294665-b988f394-cc48-4bfe-ae7b-845af8cda9cd.png">
 ```
 
+You can also use the following command:
+
+```console
+$ docker compose run --rm shell julia --threads auto run_mt.jl
+```
+
 See [README.md](https://github.com/AtelierArith/VisualAtom.jl/blob/main/README.md) to learn more.
